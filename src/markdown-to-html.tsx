@@ -1,5 +1,5 @@
 import { Detail, Clipboard } from "@raycast/api";
-import {useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { marked } from 'marked';
 
 export default function Command() {
@@ -10,15 +10,14 @@ export default function Command() {
     let cancelled = false; // cleanup if the command closes before finishing
     (async () => {
       try {
-        // Add delay to see the loading message
-        await new Promise(resolve => setTimeout(resolve, 1000));
         const t = await Clipboard.readText();
         if (!cancelled) {
-          setText(t ?? "Clipboard is empty or not text");
-          if (t) { // if text exists, then convert it with marked
-            const convertedHtml = await marked(t)
-            console.log(await marked("# My heading"));
+          const trimmedText = t?.trim() ?? "Clipboard is empty or not text";
+          setText(trimmedText)
+          if (trimmedText && trimmedText !== "Clipboard is empty or not text") { // if text exists, then convert it with marked
+            const convertedHtml = await marked(trimmedText)
             setHtml(convertedHtml)
+            Clipboard.copy(convertedHtml)
           }
         }
       }
