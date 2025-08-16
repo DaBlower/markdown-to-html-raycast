@@ -9,13 +9,13 @@
   "commands": [
     {
       "name": "markdown-to-html",
-      "title": "Markdown to Html",
+      "title": "Markdown to HTML",
       "description": "Convert Markdown to HTML",
       "mode": "view"
     },
     {
       "name": "html-to-markdown",
-      "title": "Html to Markdown",
+      "title": "HTML to Markdown",
       "description": "Convert HTML to Markdown",
       "mode": "view"
     }
