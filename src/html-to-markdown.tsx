@@ -1,4 +1,4 @@
-import { Clipboard, showHUD, closeMainWindow, Detail } from "@raycast/api";
+import { Clipboard, showHUD, popToRoot, Detail } from "@raycast/api";
 import { useEffect, useState } from "react";
 import TurndownService from 'turndown';
 
@@ -7,7 +7,7 @@ export default function Command() {
   useEffect(() => {
     // oscillating dots
     const dots = [".", "..", "..."];
-    let dotIndex = 0;
+    let dotIndex = -1;
 
     const dotsInterval = setInterval(() =>{
       dotIndex = (dotIndex + 1) % dots.length // modulo wraps it to the length of the dot array
@@ -16,25 +16,36 @@ export default function Command() {
 
     let cancelled = false; // cleanup if the command closes before finishing
     (async () => {
-      await new Promise(resolve => setTimeout(resolve, 1250));
-      clearInterval(dotsInterval);
-      await closeMainWindow({ clearRootSearch: true });
+      await new Promise(resolve => setTimeout(resolve, 900));
+
       try {
         const t = await Clipboard.readText();
         if (!cancelled) {
           const trimmedText = t?.trim() ?? "Clipboard is empty or not text";
 
+          clearInterval(dotsInterval);
+          let convertIndex = -1;
+          const convertInterval = setInterval(() =>{
+            convertIndex = (convertIndex + 1) % dots.length // modulo wraps it to the length of the dot array
+            setStatus(`Converting to Markdown${dots[convertIndex]}`)
+          }, 300)
+
+          await new Promise(resolve => setTimeout(resolve, 600));
+
+          clearInterval(convertInterval)
           if (trimmedText && trimmedText !== "Clipboard is empty or not text") { // if text exists, then convert it with marked
             const turndownService = new TurndownService();
+            console.log(turndownService.turndown("<h1>Hello</h1><p><em>World</em></p>"));
             const convertedMarkdown = turndownService.turndown(trimmedText)
 
-            Clipboard.copy(convertedMarkdown)
+            await Clipboard.copy(convertedMarkdown)
             await showHUD("Copied converted Markdown")
           }
           else {
             await showHUD("Clipboard is empty or not text")
           }
         }
+        setTimeout(() => {popToRoot();}, 1500);
       }
 
       catch {
@@ -43,7 +54,6 @@ export default function Command() {
     })();
 
     return () => {
-      clearInterval(dotsInterval);
       cancelled = true;
     };
   }, []);
