@@ -35,7 +35,6 @@ export default function Command() {
           clearInterval(convertInterval)
           if (trimmedText && trimmedText !== "Clipboard is empty or not text") { // if text exists, then convert it with marked
             const turndownService = new TurndownService();
-            console.log(turndownService.turndown("<h1>Hello</h1><p><em>World</em></p>"));
             const convertedMarkdown = turndownService.turndown(trimmedText)
 
             await Clipboard.copy(convertedMarkdown)
