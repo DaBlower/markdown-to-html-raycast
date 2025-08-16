@@ -9,9 +9,9 @@ Just copy some Markdown or HTML to your clipboard and run the correct command (e
 
 ## Get Raycast
 
-If you don't already have Raycast and you are on MacOS, you can install it (here)[https://www.raycast.com/]
+If you don't already have Raycast and you are on MacOS, you can install it [here](https://www.raycast.com/)
 
-If you are SOM reviewer and you are on Windows, DM me (here)[https://hackclub.slack.com/team/U092DB4LGMP] and I will send you a beta invite
+If you are SOM reviewer and you are on Windows, DM me [here](https://hackclub.slack.com/team/U092DB4LGMP) and I will send you a beta invite
 
 ## Install dependencies:
 
