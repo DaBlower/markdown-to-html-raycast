@@ -6,6 +6,7 @@
   "icon": "extension-icon.png",
   "author": "DaBlower",
   "license": "MIT",
+  "categories": ["Developer Tools", "Productivity"],
   "commands": [
     {
       "name": "markdown-to-html",
